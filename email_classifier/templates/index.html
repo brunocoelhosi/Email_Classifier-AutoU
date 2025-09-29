@@ -1,31 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Classificador de Emails</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoU Mail</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
     <div class="container">
-      <h1>Classificador de Emails com IA</h1>
-      <form action="/process" method="POST" enctype="multipart/form-data">
-        <label>Insira um email (.txt, .pdf ou texto):</label><br /><br />
-        <input type="file" name="file" /><br /><br />
-        <textarea
-          name="email_text"
-          rows="10"
-          cols="60"
-          placeholder="Ou cole o texto do email aqui..."
-        ></textarea
-        ><br /><br />
-        <button type="submit">Enviar e processar</button>
+      <h1>Classificador de Emails</h1>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <textarea name="content" placeholder="Digite ou cole seu email aqui...">
+          {{ conteudo }}
+        </textarea>
+        <input type="file" name="file" accept=".txt,.pdf" />
+        <button type="submit">Classificar</button>
       </form>
 
-      {% if result %}
-      <h2>Resultado:</h2>
-      <p><strong>Categoria:</strong> {{ result.category }}</p>
-      <p><strong>Resposta Sugerida:</strong></p>
-      <div class="response-box">{{ result.response }}</div>
+      {% if categoria %}
+      <div class="resultado {{categoria|lower}}">
+        <span class="categoria {{categoria|lower}}">
+          Categoria: {{ categoria }}
+        </span>
+        <p class="resposta">
+          <strong>Resposta sugerida: </strong>{{ resposta }}
+        </p>
+      </div>
       {% endif %}
     </div>
   </body>
