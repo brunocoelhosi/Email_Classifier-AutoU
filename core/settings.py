@@ -20,6 +20,10 @@ ALLOWED_HOSTS = [
     "email-classifier-autou-pe6k.onrender.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://email-classifier-autou-pe6k.onrender.com",
+    "http://localhost:8000",
+]
 
 # Application definition
 
