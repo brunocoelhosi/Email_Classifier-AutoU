@@ -1,138 +1,252 @@
+/* Variáveis CSS para Cores - ATUALIZADAS PARA LARANJA/ÂMBAR */
 :root {
-  --cor-principal: #ff8c00; /* Laranja da Logo para botões e foco */
-  --cor-secundaria: #cc3300; /* Vermelho/Vinho da Logo para destaques */
-  --cor-principal-hover: #e87a00;
-  --cor-fundo: #f8f9fa;
-  --cor-texto: #343a40;
-  --cor-sombra: rgba(0, 0, 0, 0.1);
-  --cor-borda: #ced4da;
-  --cor-resultado: #fff2e5; /* Fundo mais claro para resultado, mas com um toque de laranja */
+  --bg-dark: #1e1e2f;
+  --card-dark: #2c2c44;
+  --text-light: #f0f0f0;
+  --text-muted: #aaaaaa;
+  --accent-color: #ff9800; /* Laranja VIBRANTE (Cor da Logo) */
+  --accent-hover: #fb8c00; /* Laranja mais escuro para hover */
+  --productive-color: #71c974; /* Âmbar/Dourado para Produtivo */
+  --unproductive-color: #dc3545; /* Vermelho (mantido para alerta de Improdutivo) */
+  --none-color: #e4ab27; /* Cinza para Nenhum */
+}
+
+/* Reset Básico e Fontes (sem alteração) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: var(--cor-fundo);
-  color: var(--cor-texto);
-  margin: 0;
-  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Layout Principal e Header (sem alteração) */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--card-dark);
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.powered-by {
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+  color: var(--text-muted);
+}
+
+/* Ícone do Cérebro na cor de destaque (Laranja) */
+.powered-by i {
+  font-size: 1.2em;
+  color: var(--accent-color); /* Laranja */
+  margin-right: 8px;
+}
+
+/* Wrapper de Conteúdo Principal (sem alteração) */
+.content-wrapper {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Cards (Seções) (sem alteração significativa) */
+.card {
+  background-color: var(--card-dark);
+  padding: 30px;
+  border-radius: 12px;
+  flex: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+  font-weight: 500;
+  border-bottom: 2px solid var(--bg-dark);
+  padding-bottom: 10px;
+}
+
+/* Seção de Upload */
+.drop-area {
+  border: 2px dashed var(--text-muted);
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+  color: var(--text-muted);
+}
+
+.drop-area:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Ícone de Upload na cor de destaque (Laranja) */
+.drop-area i {
+  font-size: 2.5em;
+  color: var(--accent-color); /* Laranja */
+  margin-bottom: 10px;
+}
+
+.separator {
+  text-align: center;
+  margin: 20px 0;
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+/* Textarea (sem alteração) */
+#email-text {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--bg-dark);
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  resize: none;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Botão Principal "Processar" (Laranja com Degradê) */
+.process-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    #f57c00
+  ); /* Degradê Laranja */
+  color: white;
+  box-shadow: 0 4px 6px rgba(255, 152, 0, 0.4);
+}
+
+.process-button:hover {
+  background: linear-gradient(135deg, var(--accent-hover), #e65100);
+}
+
+/* Botão "Copiar Resposta" (Outline Laranja) */
+.copy-button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+
+  background-color: var(--bg-dark);
+  color: var(--accent-color); /* Texto Laranja */
+  border: 2px solid var(--accent-color); /* Borda Laranja */
+}
+
+.copy-button:hover {
+  background-color: var(--accent-color); /* Fundo Laranja */
+  color: var(--bg-dark); /* Texto Escuro */
+}
+
+/* Seção de Resultados (sem alteração significativa) */
+.result-label {
+  font-size: 1em;
+  color: var(--text-muted);
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+/* Badge de Categoria */
+.badge {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  margin-bottom: 20px;
+}
+
+/* Categoria "Produtivo" agora com cor ÂMBAR/DOURADO */
+.badge.produtivo {
+  background-color: var(--productive-color);
+}
+
+/* Categoria "Improdutivo" com cor Vermelha para manter o senso de alerta */
+.badge.improdutivo {
+  background-color: var(--unproductive-color);
+}
+
+.badge.none {
+  background-color: var(--none-color);
+}
+
+/* Caixa de Resposta Sugerida (sem alteração) */
+.suggested-response-box {
+  background-color: var(--bg-dark);
+  padding: 40px;
+  border-radius: 8px;
+  min-height: 150px;
+  /*font-style: italic;
+  white-space: pre-wrap;*/
+}
+
+/* Footer (sem alteração significativa) */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--card-dark);
+  color: var(--text-muted);
+  font-size: 0.85em;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
+  align-items: center;
 }
 
-/* Container principal para o conteúdo */
-.container {
-  width: 90%;
-  max-width: 700px;
-  padding: 2.5rem;
-
-  margin-top: 4rem;
+.footer i {
+  margin-left: 10px;
+  font-size: 1.2em;
 }
 
-.container-mail {
-  width: 90%;
-  max-width: 700px;
-  padding: 2.5rem;
-  background-color: white;
-  margin-top: 4rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px var(--cor-sombra);
+/* Responsividade (sem alteração) */
+@media (max-width: 900px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+  }
 }
 
-h1 {
-  font-size: 2rem;
-  color: var(--cor-secundaria); /* Usando o vermelho escuro para o título */
-  margin-bottom: 2rem;
-  font-weight: 400;
-  border-bottom: 3px solid var(--cor-principal); /* Linha do título com a cor principal */
-  padding-bottom: 0.5rem;
-  text-align: center;
-}
-
-textarea {
-  width: 100%;
-  height: 180px;
-  padding: 15px;
-  font-size: 1rem;
-  border: 1px solid var(--cor-borda);
-  border-radius: 6px;
-  box-sizing: border-box;
-  resize: vertical;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-textarea:focus {
-  border-color: var(--cor-principal);
-  outline: none;
-  /* Sombra de foco com transparência da cor principal */
-  box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.3);
-}
-
-/* Estilo para o botão "Classificar" */
-button[type="submit"] {
-  background-color: var(--cor-principal);
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  margin-top: 1.5rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
-  font-weight: 600;
-  box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4); /* Sombra laranja */
-  display: block;
-  width: 100%;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--cor-principal-hover);
-  transform: translateY(-1px);
-}
-
-button[type="submit"]:active {
-  transform: translateY(0);
-}
-
-/* Área de Resultado */
-.resultado {
-  margin-top: 2.5rem;
-  padding: 1.5rem;
-  border-radius: 8px;
-  background-color: var(--cor-resultado); /* Fundo suave laranjado */
-  border-left: 5px solid var(--cor-secundaria); /* Borda lateral com o vermelho escuro para contraste */
-  box-shadow: 0 2px 4px var(--cor-sombra);
-}
-
-.resultado.produtivo {
-  border-left-color: green; /* Borda verde para produtivo */
-  background-color: rgb(216, 241, 216);
-}
-
-.resultado.improdutivo {
-  border-left-color: #cc3300; /* Borda vermelha para improdutivo */
-  background-color: #fff2e5;
-}
-
-.categoria {
-  font-weight: 700;
-  font-size: 1.15rem;
-  /* color: var(--cor-secundaria);  Categoria em vermelho escuro para destaque */
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.categoria.produtivo {
-  color: green;
-}
-
-.categoria.improdutivo {
-  color: var(--cor-secundaria);
-}
-
-.resposta {
-  margin: 0;
-  line-height: 1.5;
-  color: var(--cor-texto);
+.copy-button.copiado {
+  background-color: #71c974; /* verde */
+  color: #fff;
+  border-color: #4caf50;
 }
