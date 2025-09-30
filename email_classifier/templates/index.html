@@ -4,33 +4,101 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      type="imagex/png"
+      href="{% static 'img/icon.png' %}"
+    />
     <title>AutoU Mail</title>
+
+    <title>Classificador de E-mails AI</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <div class="container">
-      <h1>Classificador de Emails</h1>
+      <header class="header">
+        <h1 class="logo">Classificador de E-mails AI</h1>
+        <div class="powered-by">
+          <img
+            src="{% static 'img/logo.png' %}"
+            alt="Logo AutoUmail"
+            style="max-width: 200px"
+          />
+        </div>
+      </header>
 
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+      <main class="content-wrapper">
+        <section class="card upload-section">
+          <h2>Upload de E-mail</h2>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="drop-area">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span>Selecionar Arquivo (txt ou pdf)</span>
+              <input
+                type="file"
+                name="file"
+                id="email-file"
+                accept=".txt,.pdf"
+                hidden
+              />
+            </div>
 
-        <textarea name="content" placeholder="Digite ou cole seu email aqui...">
-          {{ conteudo }}
-        </textarea>
-        <input type="file" name="file" accept=".txt,.pdf" />
-        <button type="submit">Classificar</button>
-      </form>
+            <p class="separator">Ou cole o texto de e-mail aqui:</p>
 
-      {% if categoria %}
-      <div class="resultado {{categoria|lower}}">
-        <span class="categoria {{categoria|lower}}">
-          Categoria: {{ categoria }}
-        </span>
-        <p class="resposta">
-          <strong>Resposta sugerida: </strong>{{ resposta }}
-        </p>
-      </div>
-      {% endif %}
+            <textarea
+              id="email-text"
+              rows="8"
+              name="content"
+              placeholder="Cole o conteúdo do e-mail..."
+            >
+{{ conteudo|default_if_none:"" }}</textarea
+            >
+
+            <button id="process-btn" class="process-button">Processar</button>
+          </form>
+        </section>
+
+        <section class="card results-section">
+          <h2>Resultados da Análise</h2>
+
+          <div id="results-display">
+            <p class="result-label">Categoria:</p>
+            <span id="category-badge" class="badge {{categoria|lower}}"
+              >{{categoria|default_if_none:"Arguardando Email..."}}</span
+            >
+
+            <p class="result-label">Resposta Automática Sugerida:</p>
+            <div class="suggested-response-box">
+              <p id="suggested-response">
+                {{resposta|default_if_none:"Arguardando Email..."}}
+              </p>
+            </div>
+
+            <button id="copy-btn" class="copy-button">Copiar Resposta</button>
+            <span
+              id="copy-feedback"
+              style="margin-left: 10px; color: green; display: none"
+              >Copiado!</span
+            >
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        Desenvolvido com Python, HTML & Hugging Face Transformers
+        <i class="fab fa-github"></i>
+      </footer>
     </div>
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>

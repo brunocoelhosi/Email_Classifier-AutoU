@@ -19,7 +19,7 @@ def index(request):
                 for page in pdf_reader.pages:
                     conteudo_arquivo += page.extract_text() or ""
 
-        # Junta os dois conteúdos, se ambos existirem
+        # Contatena o conteúdo do texto e do arquivo
         conteudo = "\n".join([c for c in [conteudo_texto, conteudo_arquivo] if c])
 
         if conteudo:

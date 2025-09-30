@@ -1,0 +1,138 @@
+:root {
+  --cor-principal: #ff8c00; /* Laranja da Logo para botões e foco */
+  --cor-secundaria: #cc3300; /* Vermelho/Vinho da Logo para destaques */
+  --cor-principal-hover: #e87a00;
+  --cor-fundo: #f8f9fa;
+  --cor-texto: #343a40;
+  --cor-sombra: rgba(0, 0, 0, 0.1);
+  --cor-borda: #ced4da;
+  --cor-resultado: #fff2e5; /* Fundo mais claro para resultado, mas com um toque de laranja */
+}
+
+body {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+/* Container principal para o conteúdo */
+.container {
+  width: 90%;
+  max-width: 700px;
+  padding: 2.5rem;
+
+  margin-top: 4rem;
+}
+
+.container-mail {
+  width: 90%;
+  max-width: 700px;
+  padding: 2.5rem;
+  background-color: white;
+  margin-top: 4rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px var(--cor-sombra);
+}
+
+h1 {
+  font-size: 2rem;
+  color: var(--cor-secundaria); /* Usando o vermelho escuro para o título */
+  margin-bottom: 2rem;
+  font-weight: 400;
+  border-bottom: 3px solid var(--cor-principal); /* Linha do título com a cor principal */
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  height: 180px;
+  padding: 15px;
+  font-size: 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea:focus {
+  border-color: var(--cor-principal);
+  outline: none;
+  /* Sombra de foco com transparência da cor principal */
+  box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.3);
+}
+
+/* Estilo para o botão "Classificar" */
+button[type="submit"] {
+  background-color: var(--cor-principal);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  margin-top: 1.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(255, 140, 0, 0.4); /* Sombra laranja */
+  display: block;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--cor-principal-hover);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Área de Resultado */
+.resultado {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: var(--cor-resultado); /* Fundo suave laranjado */
+  border-left: 5px solid var(--cor-secundaria); /* Borda lateral com o vermelho escuro para contraste */
+  box-shadow: 0 2px 4px var(--cor-sombra);
+}
+
+.resultado.produtivo {
+  border-left-color: green; /* Borda verde para produtivo */
+  background-color: rgb(216, 241, 216);
+}
+
+.resultado.improdutivo {
+  border-left-color: #cc3300; /* Borda vermelha para improdutivo */
+  background-color: #fff2e5;
+}
+
+.categoria {
+  font-weight: 700;
+  font-size: 1.15rem;
+  /* color: var(--cor-secundaria);  Categoria em vermelho escuro para destaque */
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.categoria.produtivo {
+  color: green;
+}
+
+.categoria.improdutivo {
+  color: var(--cor-secundaria);
+}
+
+.resposta {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--cor-texto);
+}

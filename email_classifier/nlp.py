@@ -12,16 +12,21 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def preprocess_text(text: str) -> str:
     # Converte para minúsculas e remove espaços extras
     text = text.lower().strip()
+    # Remove múltiplos espaços
     text = " ".join(text.split())
+    #
     doc = nlp_spacy(text)
-    tokens = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]
+    #
+    tokens = [token.lemma_ for token in doc if not token.is_punct]
     return " ".join(tokens)
 
 def process_email(email_text: str):
-    # Pré-processamento do texto
+
+    # Pré-processa o texto do email
     preprocessed_text = preprocess_text(email_text)
     print(f"Texto pré-processado: {preprocessed_text}")
 
+    # Cria o prompt para a API da OpenAI
     prompt = f"""
     Você é um classificador de emails.
     Analise o email abaixo e responda **exatamente** no formato JSON:
@@ -32,8 +37,8 @@ def process_email(email_text: str):
     }}
 
     Critérios:
-    - "Produtivo": emails que pedem ação, suporte, informação ou resolução de problema.
-    - "Improdutivo": emails informativos, convites, spam, propagandas ou mensagens sem necessidade de resposta.
+    - "Produtivo": emails que pedem ação, suporte, informação, resolução de problema, atualização sobre casos em aberto ou dúvidas sobre o sistema.
+    - "Improdutivo": emails informativos, mensagens de felicitações, agradecimentos, convites, spam, propagandas ou mensagens sem necessidade de resposta.
 
     Email recebido (pré-processado):
     {preprocessed_text}
@@ -43,6 +48,8 @@ def process_email(email_text: str):
         model="gpt-5-nano",
         messages=[{"role": "user", "content": prompt}],
     )
+
+    print(f"Texto processado: {response.choices[0].message.content}")
 
     return response.choices[0].message.content
 

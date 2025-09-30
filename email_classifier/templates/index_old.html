@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      type="imagex/png"
+      href="{% static 'img/icon.png' %}"
+    />
+    <title>AutoU Mail</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div style="width: 100%; text-align: center; margin-bottom: 2rem">
+        <img
+          src="{% static 'img/logo.png' %}"
+          alt="Logo AutoUmail"
+          style="max-width: 200px"
+        />
+      </div>
+
+      <div class="container-mail">
+        <h1>Classificador de Emails</h1>
+        <h5>
+          Digite abaixo o seu email e/ou realize o upload de um arquivo
+          (.pdf/.txt).
+        </h5>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <textarea
+            name="content"
+            placeholder="Digite ou cole seu email aqui..."
+          >
+            {{ conteudo|default_if_none:"" }}
+          </textarea>
+          <input type="file" name="file" accept=".txt,.pdf" />
+          <button type="submit">Classificar</button>
+        </form>
+
+        {% if categoria %}
+        <div class="resultado {{categoria|lower}}">
+          <span class="categoria {{categoria|lower}}">
+            Categoria: {{ categoria }}
+          </span>
+          <p class="resposta">
+            <strong>Resposta sugerida: </strong>{{ resposta }}
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
