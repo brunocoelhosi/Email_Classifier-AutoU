@@ -1,18 +1,54 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. Seleciona a área clicável (o div visual)
+  const form = document.getElementById("email-form");
+  const loadingOverlay = document.getElementById("loading-overlay");
+  const copyButton = document.getElementById("copy-btn");
+
+  // Modal de Loading enquanto aguarda resposta da IA
+  form.addEventListener("submit", function (event) {
+    const emailText = document.getElementById("email-text").value.trim();
+    const emailFile = document.getElementById("email-file").files[0];
+
+    if (emailText === "" && !emailFile) {
+      alert("Por favor, cole o conteúdo do e-mail ou selecione um arquivo.");
+      // Bloqueia o envio do formulário se nenhum conteúdo for fornecido
+      event.preventDefault();
+      return;
+    }
+
+    if (loadingOverlay) {
+      loadingOverlay.style.display = "flex";
+    }
+  });
+
+  // Botão de copiar resposta sugerida
+  document.getElementById("copy-btn").addEventListener("click", function () {
+    const resposta = document.getElementById("suggested-response").innerText;
+    const btn = this;
+    const originalText = btn.textContent;
+
+    navigator.clipboard.writeText(resposta).then(() => {
+      btn.textContent = "Copiado!";
+      btn.classList.add("copiado");
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove("copiado");
+        btn.disabled = false;
+      }, 2000); // delay de 2 segundos para reverter o texto do botão
+    });
+  });
+
+  // Upload de arquivo estilizado
   const dropArea = document.querySelector(".drop-area");
-  // 2. Seleciona o campo de input de arquivo (que está escondido)
   const fileInput = document.getElementById("email-file");
-  // 3. Seleciona o span onde está o texto
   const dropText = dropArea.querySelector("span");
 
-  // Adiciona um listener de clique na área visual
+  // Ao clicar na área de drop, abre o seletor de arquivos
   dropArea.addEventListener("click", function () {
-    // Ao clicar na área, ele dispara o clique no input de arquivo escondido
     fileInput.click();
   });
 
-  // Opcional: Atualiza o texto visual quando um arquivo é selecionado
+  // Destaca a área de drop ao selecionar um arquivo
   fileInput.addEventListener("change", function () {
     if (fileInput.files.length > 0) {
       // Se um arquivo foi selecionado, mostra o nome dele
@@ -26,21 +62,31 @@ document.addEventListener("DOMContentLoaded", function () {
       dropArea.style.border = "2px dashed var(--text-muted)";
     }
   });
-});
 
-document.getElementById("copy-btn").addEventListener("click", function () {
-  const resposta = document.getElementById("suggested-response").innerText;
-  const btn = this;
-  const originalText = btn.textContent;
+  // Rola a tela para os resultados automaticamente
+  // Seleciona o elemento que contém a categoria (para verificar se há resultados)
+  const categoryBadge = document.getElementById("category-badge");
 
-  navigator.clipboard.writeText(resposta).then(() => {
-    btn.textContent = "Copiado!";
-    btn.classList.add("copiado");
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.classList.remove("copiado");
-      btn.disabled = false;
-    }, 2000); // volta ao texto original após 1,5 segundos
-  });
+  // Seleciona o elemento de destino
+  const resultsAnchor = document.getElementById("results-anchor"); // Ou 'results-display'
+
+  // Função que verifica e rola a tela
+  function scrollToResults() {
+    // Verifica se o texto da categoria foi substituído pelos resultados
+    // 'Aguardando Email...' é o texto padrão (default_if_none) do Django
+    const currentCategory = categoryBadge.textContent.trim();
+
+    if (
+      resultsAnchor &&
+      currentCategory !== "Aguardando Email..." &&
+      currentCategory !== "AGUARDANDO EMAIL..."
+    ) {
+      resultsAnchor.scrollIntoView({
+        behavior: "smooth", // Rola suavemente
+        block: "start", // Coloca o topo do elemento no topo da janela
+      });
+    }
+  }
+  // Executa a rolagem após o carregamento completo da página
+  scrollToResults();
 });

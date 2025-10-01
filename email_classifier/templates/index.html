@@ -24,9 +24,13 @@
     />
   </head>
   <body>
+    <div id="loading-overlay" class="loading-overlay" style="display: none">
+      <div class="spinner"></div>
+      <p>Aguardando a classificação da IA...</p>
+    </div>
     <div class="container">
       <header class="header">
-        <h1 class="logo">Classificador de E-mails AI</h1>
+        <h1 class="logo">Classificador de E-mails</h1>
         <div class="powered-by">
           <img
             src="{% static 'img/logo.png' %}"
@@ -38,8 +42,8 @@
 
       <main class="content-wrapper">
         <section class="card upload-section">
-          <h2>Upload de E-mail</h2>
-          <form method="post" enctype="multipart/form-data">
+          <h2>Upload do E-mail</h2>
+          <form id="email-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="drop-area">
               <i class="fas fa-cloud-upload-alt"></i>
@@ -53,7 +57,7 @@
               />
             </div>
 
-            <p class="separator">Ou cole o texto de e-mail aqui:</p>
+            <p class="separator">Ou cole o texto do e-mail aqui:</p>
 
             <textarea
               id="email-text"
@@ -68,7 +72,7 @@
           </form>
         </section>
 
-        <section class="card results-section">
+        <section class="card results-section" id="results-anchor">
           <h2>Resultados da Análise</h2>
 
           <div id="results-display">

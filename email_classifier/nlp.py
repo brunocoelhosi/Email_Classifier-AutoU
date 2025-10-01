@@ -2,6 +2,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 import spacy
+import json
+from .logger import logger
 
 # Carrega o modelo de NLP para português
 nlp_spacy = spacy.load("pt_core_news_sm")
@@ -14,17 +16,21 @@ def preprocess_text(text: str) -> str:
     text = text.lower().strip()
     # Remove múltiplos espaços
     text = " ".join(text.split())
-    #
+    # Processa o texto com spaCy
     doc = nlp_spacy(text)
-    #
+    # Lematização e remoção de pontuação
     tokens = [token.lemma_ for token in doc if not token.is_punct]
     return " ".join(tokens)
 
-def process_email(email_text: str):
-
+def process_email(email_text: str) -> dict: # <--- Retorna um dicionário
+    """
+    Pré-processa o e-mail, envia para a OpenAI e retorna um dicionário Python.
+    """
     # Pré-processa o texto do email
+    logger.info(f"Texto ORIGINAL recebido (Tamanho: {len(email_text)} caracteres).")
     preprocessed_text = preprocess_text(email_text)
-    print(f"Texto pré-processado: {preprocessed_text}")
+
+    logger.info(f"Texto pré-processado: {preprocessed_text}")
 
     # Cria o prompt para a API da OpenAI
     prompt = f"""
@@ -44,12 +50,30 @@ def process_email(email_text: str):
     {preprocessed_text}
     """
 
-    response = client.chat.completions.create(
-        model="gpt-5-nano",
-        messages=[{"role": "user", "content": prompt}],
-    )
+    try:
+        response = client.chat.completions.create(
+            # MODELO: O 'gpt-5-nano' é hipotético. Use um modelo existente (ex: gpt-3.5-turbo).
+            model="gpt-3.5-turbo", 
+            messages=[{"role": "user", "content": prompt}],
+            # NOVIDADE: Adiciona o formato de resposta JSON, forçando a saída correta
+            response_format={"type": "json_object"} 
+        )
 
-    print(f"Texto processado: {response.choices[0].message.content}")
-
-    return response.choices[0].message.content
-
+        # A resposta da API já está no formato JSON, o conteúdo está no message.content
+        json_string = response.choices[0].message.content
+        logger.info(f"Resposta JSON recebida: {json_string}")
+        
+        # O PONTO CHAVE: Converte a string JSON em um dicionário Python
+        resultado_dict = json.loads(json_string) 
+        
+        return resultado_dict # Retorna o dicionário
+        
+    except json.JSONDecodeError:
+        # Erro se a resposta da IA não puder ser decodificada como JSON
+        logger.error("Erro de decodificação JSON na resposta da IA.")
+        return {"categoria": "ERRO", "resposta_sugerida": "Erro de decodificação JSON na resposta da IA."}
+        
+    except Exception as e:
+        # Erro de conexão com a API ou outro
+        logger.error(f"Erro na comunicação com a OpenAI: {e}")
+        return {"categoria": "ERRO", "resposta_sugerida": "Erro na comunicação com o serviço de IA."}

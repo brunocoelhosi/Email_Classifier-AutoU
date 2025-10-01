@@ -1,17 +1,16 @@
-/* Variáveis CSS para Cores - ATUALIZADAS PARA LARANJA/ÂMBAR */
 :root {
   --bg-dark: #1e1e2f;
   --card-dark: #2c2c44;
   --text-light: #f0f0f0;
   --text-muted: #aaaaaa;
-  --accent-color: #ff9800; /* Laranja VIBRANTE (Cor da Logo) */
+  --accent-color: #ff9800; /* Laranja (Logo) */
   --accent-hover: #fb8c00; /* Laranja mais escuro para hover */
-  --productive-color: #71c974; /* Âmbar/Dourado para Produtivo */
-  --unproductive-color: #dc3545; /* Vermelho (mantido para alerta de Improdutivo) */
-  --none-color: #e4ab27; /* Laranja claro para Nenhum */
+  --productive-color: #71c974; /* Dourado (Alerta de Produtivo */
+  --unproductive-color: #dc3545; /* Vermelho (Alerta de Improdutivo) */
+  --none-color: #e4ab27; /* Laranja claro (Aguardando análise) */
 }
 
-/* Reset Básico e Fontes (sem alteração) */
+/* Reset Básico e Fontes */
 * {
   margin: 0;
   padding: 0;
@@ -26,7 +25,7 @@ body {
   padding: 20px;
 }
 
-/* Layout Principal e Header (sem alteração) */
+/* Layout Principal e Header  */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -161,7 +160,7 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 20px;
+  margin-top: 25px;
 
   background-color: var(--bg-dark);
   color: var(--accent-color); /* Texto Laranja */
@@ -212,9 +211,9 @@ body {
   background-color: var(--bg-dark);
   padding: 40px;
   border-radius: 8px;
-  min-height: 150px;
-  /*font-style: italic;
-  white-space: pre-wrap;*/
+  /*min-height: 150px;*/
+  min-height: 240px;
+  overflow-y: auto;
 }
 
 /* Footer (sem alteração significativa) */
@@ -255,4 +254,47 @@ body {
   background-color: #71c974; /* verde */
   color: #fff;
   border-color: #4caf50;
+}
+
+/* --- LOADING OVERLAY STYLES --- */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Fundo escuro semi-transparente para focar no loading */
+  background-color: rgba(0, 0, 0, 0.85);
+  display: none; /* ESCONDIDO POR PADRÃO (JS controlará isso) */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1000; /* Garante que fique acima de todo o conteúdo da página */
+  color: white; /* Cor do texto no overlay */
+  font-size: 1.2em;
+}
+
+.loading-overlay p {
+  margin-top: 20px;
+  /* Use a cor do seu logo (laranja/âmbar) */
+  color: var(--accent-color, #ff9900);
+}
+
+/* Spinner (Círculo Giratório) */
+.spinner {
+  border: 8px solid rgba(255, 255, 255, 0.3); /* Base cinza claro */
+  border-top: 8px solid var(--accent-color, #ff9900); /* Topo laranja (giratório) */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
