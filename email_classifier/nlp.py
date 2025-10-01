@@ -28,17 +28,17 @@ def process_email(email_text: str):
 
     # Cria o prompt para a API da OpenAI
     prompt = f"""
-    Você é um classificador de emails.
-    Analise o email abaixo e responda **exatamente** no formato JSON:
+    Você é um classificador de emails de uma empresa do setor financeiro que recebe um alto volume de mensagens diariamente.
+    Sua função é classificar cada email recebido e sugerir uma resposta curta e educada, **exatamente** no formato JSON abaixo:
 
     {{
-      "categoria": "Produtivo" ou "Improdutivo",
-      "resposta_sugerida": "Mensagem curta, educada e adequada ao remetente"
+    "categoria": "Produtivo" ou "Improdutivo",
+    "resposta_sugerida": "Mensagem curta, educada e adequada ao remetente"
     }}
 
     Critérios:
-    - "Produtivo": emails que pedem ação, suporte, informação, resolução de problema, atualização sobre casos em aberto ou dúvidas sobre o sistema.
-    - "Improdutivo": emails informativos, mensagens de felicitações, agradecimentos, convites, spam, propagandas ou mensagens sem necessidade de resposta.
+    - "Produtivo": Emails que pedem ação, suporte, informação, resolução de problema, atualização sobre casos em aberto, envio de arquivos relevantes ou dúvidas sobre o sistema/serviços.
+    - "Improdutivo": Emails informativos, felicitações, agradecimentos, convites, spam, propagandas ou mensagens sem necessidade de ação.
 
     Email recebido (pré-processado):
     {preprocessed_text}
