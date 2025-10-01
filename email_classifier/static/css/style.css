@@ -239,7 +239,7 @@ body {
   font-weight: normal;
 }
 
-/* Responsividade (sem alteração) */
+/* Responsividade */
 @media (max-width: 900px) {
   .content-wrapper {
     flex-direction: column;
@@ -251,12 +251,12 @@ body {
 }
 
 .copy-button.copiado {
-  background-color: #71c974; /* verde */
+  background-color: #71c974;
   color: #fff;
   border-color: #4caf50;
 }
 
-/* --- LOADING OVERLAY STYLES --- */
+/* Overlay */
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -265,12 +265,12 @@ body {
   height: 100%;
   /* Fundo escuro semi-transparente para focar no loading */
   background-color: rgba(0, 0, 0, 0.85);
-  display: none; /* ESCONDIDO POR PADRÃO (JS controlará isso) */
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   z-index: 1000; /* Garante que fique acima de todo o conteúdo da página */
-  color: white; /* Cor do texto no overlay */
+  color: white;
   font-size: 1.2em;
 }
 

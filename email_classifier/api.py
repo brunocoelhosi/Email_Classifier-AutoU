@@ -1,7 +1,7 @@
 from ninja import Router
 from .nlp import process_email
 from .schemas import EmailInput, ClassificationOutput
-from .logger import logger
+from .logger import logger_api as logger
 from ninja.errors import HttpError
 
 router = Router()

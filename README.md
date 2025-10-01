@@ -1,6 +1,8 @@
 # 📧 Email Classifier AutoU 🤖
 
-Este projeto é um **classificador automático de e-mails** que utiliza técnicas de Processamento de Linguagem Natural (NLP) e Inteligência Artificial para categorizar e sugerir respostas automáticas para e-mails recebidos. O backend é desenvolvido em Python com Django e integra modelos de IA via API (OpenAI). A interface web permite ao usuário o upload de arquivos de email em formatos .txt ou .pdf ou a inserção direta de texto e receber a classificação e sugestão de resposta.
+Este projeto é um **classificador automático de e-mails** que utiliza técnicas de Processamento de Linguagem Natural (NLP) e Inteligência Artificial para categorizar e sugerir respostas automáticas para e-mails recebidos.
+
+O backend é desenvolvido em Python com Django e integra modelos de IA via API (OpenAI). A interface web permite ao usuário o upload de arquivos de email em formatos .txt ou .pdf ou a inserção direta de texto e receber a classificação e sugestão de resposta.
 
 ---
 
@@ -24,9 +26,11 @@ Este projeto é um **classificador automático de e-mails** que utiliza técnica
 
 - 🤖 **Classificação automática** de e-mails em "Produtivo" ou "Improdutivo"
 - 💬 **Sugestão automática de resposta** baseada na categoria identificada
-- 🧹 **Pré-processamento de texto** com técnicas de NLP (minúsculas, remoção de espaços, lemmatização, remoção de stopwords)
+- 📝 **Processamento de arquivos**: Suporte para upload e leitura de conteúdo de arquivos **.txt** e **.pdf** (via `pypdf`).
+- 🧹 **Pré-processamento de texto** com técnicas de NLP (minúsculas, remoção de espaços, lematização, remoção de stopwords)
 - 🖥️ **Interface web** fluída para interação
 - 🔗 **Integração com API de IA** (OpenAI GPT)
+- 📢 **Sistema de Logging** robusto para monitoramento e diagnóstico de erros (Django, NLP, e API).
 
 ---
 
@@ -44,14 +48,36 @@ Este projeto é um **classificador automático de e-mails** que utiliza técnica
 
 - 🐍 **Python** & **Django**: Backend e servidor web
 - ⚡ **Django Ninja**: Criação de APIs rápidas e documentação automática
-- 🤖 **OpenAI GPT**: Classificação e sugestão de resposta via IA
+- 🤖 **OpenAI GPT-3.5 Turbo**: Modelo de IA usado para a classificação e geração de resposta via API.
 - 🧠 **spaCy**: Pré-processamento de texto (lemmatização, stopwords, etc.)
-- 🎨 **HTML/CSS**: Interface web
+- 📄 **pypdf**: Biblioteca para leitura e extração de texto de arquivos PDF.
+- 🎨 **HTML/CSS/JavaScript**: Interface web (incluindo _loading screen_ e _scroll_ dinâmico).
 - 🧪 **pytest + pytest-cov**: Testes automatizados e cobertura de código
 
 ---
 
-## 📝 Notas sobre NLP
+## 🧠 Inteligência Artificial (IA) e Prompt Engineering
+
+O serviço de classificação é centralizado no arquivo `nlp.py` e utiliza uma arquitetura de IA baseada em prompts para garantir precisão e estabilidade na saída de dados.
+
+### Escolha do Modelo
+
+O modelo selecionado para a classificação é o **OpenAI GPT-3.5 Turbo**. Esta escolha é estratégica devido a:
+
+1.  **Baixa Latência e Custo:** É um modelo que oferece alta velocidade de resposta com um custo menor, ideal para processamento em massa de e-mails.
+2.  **Habilidade de JSON:** Excelente capacidade de seguir instruções de formato.
+
+### Prompt Engineering e Formato de Resposta
+
+Para garantir a confiabilidade do sistema, a comunicação com a API da OpenAI é rigidamente controlada:
+
+- **Definição de Papel:** O prompt define o papel da IA como um "classificador de emails de uma empresa do setor financeiro".
+- **Critérios Claros:** Os critérios de classificação ('Produtivo' vs. 'Improdutivo') são definidos explicitamente no prompt, o que minimiza a subjetividade da IA.
+- **Saída Forçada em JSON:** A requisição é configurada para forçar o retorno no formato JSON (`response_format={"type": "json_object"}`), eliminando a necessidade de grandes bibliotecas de validação e assegurando que o _backend_ Django receba os campos `categoria` e `resposta_sugerida` corretamente.
+
+---
+
+## 📝 Processamento de Linguagem Natural (NLP)
 
 O pré-processamento do texto inclui:
 
@@ -61,6 +87,20 @@ O pré-processamento do texto inclui:
 - Remoção de stopwords e pontuação
 
 Essas etapas são realizadas antes de enviar o texto para a IA, tornando a análise mais eficiente e precisa.
+
+---
+
+## 🔔 Sistema de Logging e Monitoramento
+
+O projeto utiliza um sistema de _logging_ centralizado (`.logger`) para rastrear o fluxo de execução e diagnosticar falhas, sendo crucial para operações com APIs externas.
+
+### Pontos de Registro Principais
+
+- **`views.py`**: Registra o início da requisição POST, validação do tamanho do arquivo e o conteúdo final antes de chamar a IA.
+- **`utils.py`**: Monitora o processo de leitura de arquivos (`.txt` e `.pdf`), registrando o tipo de arquivo e possíveis erros durante a extração do texto.
+- **`nlp.py`**: Registra o texto bruto de entrada, o texto após o pré-processamento, a resposta JSON exata da OpenAI e trata erros de decodificação JSON ou de conexão com a API.
+
+O sistema usa `logger.info()` para eventos de fluxo normais e `logger.error()` ou `logger.warning()` para capturar falhas e exceções, garantindo que o `exc_info=True` seja usado para erros fatais.
 
 ---
 
@@ -155,6 +195,8 @@ docker-compose up --build
 ```bash
 docker-compose down
 ```
+
+---
 
 ## Execução via Makefile
 

@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from .logger import logger
+from .logger import logger_utils as logger
 
 def read_uploaded_file(uploaded_file):
     """

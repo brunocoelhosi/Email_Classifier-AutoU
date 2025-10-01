@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import spacy
 import json
-from .logger import logger
+from .logger import logger_nlp as logger
 
 # Carrega o modelo de NLP para português
 nlp_spacy = spacy.load("pt_core_news_sm")
@@ -52,18 +52,15 @@ def process_email(email_text: str) -> dict: # <--- Retorna um dicionário
 
     try:
         response = client.chat.completions.create(
-            # MODELO: O 'gpt-5-nano' é hipotético. Use um modelo existente (ex: gpt-3.5-turbo).
             model="gpt-3.5-turbo", 
             messages=[{"role": "user", "content": prompt}],
-            # NOVIDADE: Adiciona o formato de resposta JSON, forçando a saída correta
             response_format={"type": "json_object"} 
         )
-
-        # A resposta da API já está no formato JSON, o conteúdo está no message.content
-        json_string = response.choices[0].message.content
+        
+        json_string = response.choices[0].message.content # Resposta da IA
         logger.info(f"Resposta JSON recebida: {json_string}")
         
-        # O PONTO CHAVE: Converte a string JSON em um dicionário Python
+        # Converte a string JSON em um dicionário Python
         resultado_dict = json.loads(json_string) 
         
         return resultado_dict # Retorna o dicionário

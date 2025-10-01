@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .nlp import process_email 
 from .utils import read_uploaded_file 
-from .logger import logger
+from .logger import logger_views as logger
 
 # Limite de upload em bytes (10 MB)
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024  
