@@ -5,6 +5,18 @@ Este projeto é um **classificador automático de e-mails** que utiliza técnica
 O backend é desenvolvido em Python com Django e integra modelos de IA via API (OpenAI). A interface web permite ao usuário o upload de arquivos de email em formatos .txt ou .pdf ou a inserção direta de texto e receber a classificação e sugestão de resposta.
 
 ---
+🌎 Deploy e Acesso Público
+O sistema está hospedado publicamente e pode ser acessado diretamente.
+
+🔗 Link de Acesso: https://email-classifier-autou-pe6k.onrender.com/
+
+⚠️ Nota Importante sobre o Deploy:
+
+- A aplicação está hospedada no serviço gratuito da Render. Isso significa que, após um período de inatividade, o deploy entra em modo stand by (suspensão).
+- Se você tentar acessar a aplicação e encontrar uma lentidão inicial (1 minuto), é porque o servidor está sendo reativado (o processo chamado "spin up").
+- O primeiro acesso após um longo período de inatividade sempre será mais lento. Os acessos subsequentes serão rápidos.
+
+---
 
 ## 📚 Índice
 
